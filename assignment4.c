@@ -12,7 +12,6 @@
 struct ProcessDetails
 {
     int id;
-    // Replace with arrivalTime != timeLeft
     bool notAdded;
     char processName[10];
     int arrivalTime;
@@ -44,9 +43,7 @@ int main()
     while (fgets(fileLine, sizeof(fileLine), file))
     {
         // Array to hold individual line values
-        char lineValues[20][10];
-        //sprintf(output, "%s", fileLine);
-        //puts(output);
+        char lineValues[30][10];
 
         // Continue splitting line around " " until NULL
         char *ptr = strtok(fileLine, delim);
@@ -64,10 +61,6 @@ int main()
         // Number of processes
         int numOfProcesses = (count - 1) / 3;
 
-        /*
-        printf("Number of values %d\n", count);
-        printf("Number of processes %d\n", numOfProcesses);
-*/
         struct ProcessDetails process[numOfProcesses];
         int index = 0;
         int totalTime = 0;
@@ -83,7 +76,6 @@ int main()
             index = index + 3;
         }
         int quantumTime = atoi(lineValues[count - 1]);
-
         int readyQueue[30];
         int queueInsert = 0;
         int current = 0;
@@ -105,7 +97,6 @@ int main()
                 process[processID].timeLeft = 0;
                 process[processID].tat = currentTime - process[processID].arrivalTime;
                 process[processID].notAdded = false;
-                process[processID].tat = currentTime - process[processID].arrivalTime;
                 process[processID].waitingTime = process[processID].tat - process[processID].burstTime;
                 totalWaitingTime = totalWaitingTime + process[processID].waitingTime;
                 totalTAT = totalTAT + process[processID].tat;
@@ -144,7 +135,6 @@ int main()
             sprintf(output, "Process: %s Arrival Time: %d Burst Time: %d Waiting Time: %d Turnaround Time: %d", process[i].processName, process[i].arrivalTime, process[i].burstTime, process[i].waitingTime, process[i].tat);
             puts(output);
         }
-
         printf("\n");
         sprintf(output, "Total Turnaround Time: %.0f", totalTAT);
         puts(output);
